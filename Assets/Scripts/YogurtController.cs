@@ -12,12 +12,15 @@ public class YogurtController : MonoBehaviour
     int passivePerSecond = 1;
     float lastPassive;
     [SerializeField] GameObject floatingTextPrefab;
+    MarketController market;
     // Start is called before the first frame update
     void Start()
     {
         yogurt = PlayerPrefs.GetInt("yogurt", 0);
         counter.SetText(yogurt.ToString());
         lastPassive = Time.time;
+        market = GetComponent<MarketController>();
+        market.checkBuyable(yogurt);
     }
 
     // Update is called once per frame
@@ -26,23 +29,32 @@ public class YogurtController : MonoBehaviour
         if(isPassiveActivated && Time.time-lastPassive>1)
         {
             yogurt += passivePerSecond;
-            counter.SetText(yogurt.ToString());
-            counter.GetComponentInParent<Animator>().Play("CounterAnimation");
-            PlayerPrefs.SetInt("yogurt", yogurt);
-            Instantiate(floatingTextPrefab, new Vector2(-3f, -1f), Quaternion.identity);
             lastPassive = Time.time;
+            UpdateCounterText();
         }
     }
 
     public void Click()
     {
         yogurt += scorePerClick;
-        counter.SetText(yogurt.ToString());
-        //todo text animation
-        counter.GetComponentInParent<Animator>().Play("CounterAnimation");
-        PlayerPrefs.SetInt("yogurt", yogurt);
-        Instantiate(floatingTextPrefab, new Vector2(-3f,-1f), Quaternion.identity);
+        UpdateCounterText();
     }
 
+    private void UpdateCounterText()
+    {
+        counter.SetText(yogurt.ToString());
+        counter.GetComponentInParent<Animator>().Play("CounterAnimation");
+        PlayerPrefs.SetInt("yogurt", yogurt);
+        Instantiate(floatingTextPrefab, new Vector2(-3f, -1f), Quaternion.identity);
+
+        market.checkBuyable(yogurt);
+    }
+
+
+    public void DecreaseSikke(int amount)
+    {
+        yogurt -= amount;
+        UpdateCounterText();
+    }
     
 }

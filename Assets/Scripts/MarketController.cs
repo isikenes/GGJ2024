@@ -1,28 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MarketController : MonoBehaviour
 {
-    [SerializeField] GameObject gameUI;
-    [SerializeField] GameObject marketUI;
+    [SerializeField] ItemScript[] items;
+    YogurtController yogurtController;
     // Start is called before the first frame update
     void Start()
     {
-        
+        yogurtController = GetComponent<YogurtController>();
     }
 
-    public void OpenMarket()
+    public void checkBuyable(int sikke)
     {
-        gameUI.SetActive(false);
-        marketUI.SetActive(true);
+        foreach(ItemScript item in items)
+        {
+
+            if(!item.isBought && sikke<item.cost)
+            {
+                item.GetComponentInChildren<Button>().interactable=false;
+            } else if(!item.isBought && sikke >= item.cost)
+            {
+                item.GetComponentInChildren<Button>().interactable = true;
+            }
+        }
     }
 
-    public void CloseMarket()
+    public void buyItem(int index)
     {
-        marketUI.SetActive(false);
-        gameUI.SetActive(true);
+        items[index].isBought = true;
+        items[index].GetComponentInChildren<Button>().gameObject.SetActive(false);
+
+        string key = "isUnlocked" + index;
+        PlayerPrefs.SetInt(key, 1);
+        yogurtController.DecreaseSikke(items[index].cost);
     }
+    
 
 
 }
