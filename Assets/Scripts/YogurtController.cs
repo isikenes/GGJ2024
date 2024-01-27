@@ -27,6 +27,7 @@ public class YogurtController : MonoBehaviour
         scorePerClick = PlayerPrefs.GetInt("spc", 1);
         passivePerSecond = PlayerPrefs.GetInt("pps", 1);
         isPassiveActivated = PlayerPrefs.GetInt("passive", 0) == 1;
+        UpdateCounterText();
     }
 
     // Update is called once per frame
