@@ -7,7 +7,7 @@ public class rakamscript : MonoBehaviour
     public Rigidbody2D rb;
     void Start()
     {
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 2f);
         rb.AddForce(new Vector2(Random.Range(-250,250), 250));
         //transform.Translate(0, 0.01f,0);
     }
