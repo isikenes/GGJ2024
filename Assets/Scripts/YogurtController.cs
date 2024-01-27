@@ -15,7 +15,7 @@ public class YogurtController : MonoBehaviour
     [SerializeField] GameObject floatingTextPrefab;
     MarketController market;
     [SerializeField] Slider bar;
-    int endScore=10000;
+    int endScore=2000;
     // Start is called before the first frame update
     void Start()
     {
