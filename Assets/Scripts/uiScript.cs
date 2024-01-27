@@ -32,4 +32,6 @@ public class uiScript : MonoBehaviour
         OptionsPanel.gameObject.SetActive(false);
         MenuPanel.gameObject.SetActive(true);
     }
+
+    
 }
