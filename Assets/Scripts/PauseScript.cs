@@ -17,6 +17,10 @@ public class PauseScript : MonoBehaviour
             { Stop(); }
         }
     }
+    public void pause()
+    {
+       Stop();         
+    }
     public void Continue()
     {
         Pausemenu.SetActive(false);
