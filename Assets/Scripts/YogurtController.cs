@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class YogurtController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class YogurtController : MonoBehaviour
     float lastPassive;
     [SerializeField] GameObject floatingTextPrefab;
     MarketController market;
+    [SerializeField] Slider bar;
+    int endScore=10000;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +54,7 @@ public class YogurtController : MonoBehaviour
         Instantiate(floatingTextPrefab, new Vector2(-3f, -1f), Quaternion.identity);
 
         market.checkBuyable(yogurt);
+        bar.value = (float) yogurt / (float) endScore;
     }
 
 
