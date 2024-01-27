@@ -31,11 +31,20 @@ public class MarketController : MonoBehaviour
     public void buyItem(int index)
     {
         items[index].isBought = true;
-        items[index].GetComponentInChildren<Button>().gameObject.SetActive(false);
+        items[index].DisableUI();
 
         string key = "isUnlocked" + index;
         PlayerPrefs.SetInt(key, 1);
         yogurtController.DecreaseSikke(items[index].cost);
+
+        yogurtController.UpdateScorePerClick();
+        if (index == 1)
+        {
+            yogurtController.ActivatePassive();
+        } else if(index>1)
+        {
+            yogurtController.UpdatePassive();
+        }
     }
     
 

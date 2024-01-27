@@ -9,7 +9,7 @@ public class YogurtController : MonoBehaviour
     int scorePerClick = 1;
     [SerializeField] TextMeshProUGUI counter;
     public bool isPassiveActivated;
-    int passivePerSecond = 1;
+    int passivePerSecond = 0;
     float lastPassive;
     [SerializeField] GameObject floatingTextPrefab;
     MarketController market;
@@ -21,6 +21,9 @@ public class YogurtController : MonoBehaviour
         lastPassive = Time.time;
         market = GetComponent<MarketController>();
         market.checkBuyable(yogurt);
+        scorePerClick = PlayerPrefs.GetInt("spc", 1);
+        passivePerSecond = PlayerPrefs.GetInt("pps", 1);
+        isPassiveActivated = PlayerPrefs.GetInt("passive", 0) == 1;
     }
 
     // Update is called once per frame
@@ -56,5 +59,23 @@ public class YogurtController : MonoBehaviour
         yogurt -= amount;
         UpdateCounterText();
     }
+
+    public void UpdateScorePerClick()
+    {
+        scorePerClick *= 2;
+        PlayerPrefs.SetInt("spc", scorePerClick);
+    }
+
+    public void ActivatePassive()
+    {
+        isPassiveActivated = true;
+        passivePerSecond = 1;
+        PlayerPrefs.SetInt("passive", 1);
+    }
     
+    public void UpdatePassive()
+    {
+        passivePerSecond *= 2;
+        PlayerPrefs.SetInt("pps", passivePerSecond);
+    }
 }
