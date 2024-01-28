@@ -15,7 +15,13 @@ public class YogurtController : MonoBehaviour
     [SerializeField] GameObject floatingTextPrefab;
     MarketController market;
     [SerializeField] Slider bar;
-    int endScore=2000;
+    int endScore=1000;
+    [SerializeField] GameObject[] cutscenes;
+    int cutsceneIndex = 0;
+    //int[] cutsceneScores = {100, 1000, 10000, 100000, 1000000, 10000000 };
+
+    int[] cutsceneScores = { 10, 20, 30, 40, 50 };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +33,8 @@ public class YogurtController : MonoBehaviour
         scorePerClick = PlayerPrefs.GetInt("spc", 1);
         passivePerSecond = PlayerPrefs.GetInt("pps", 1);
         isPassiveActivated = PlayerPrefs.GetInt("passive", 0) == 1;
+        cutsceneIndex = PlayerPrefs.GetInt("cutscene", 0);
+        endScore = cutsceneScores[cutsceneIndex];
         UpdateCounterText();
     }
 
@@ -56,6 +64,21 @@ public class YogurtController : MonoBehaviour
 
         market.checkBuyable(yogurt);
         bar.value = (float) yogurt / (float) endScore;
+        if(yogurt>=cutsceneScores[cutsceneIndex])
+        {
+            cutscenes[cutsceneIndex].SetActive(true);
+            StartCoroutine(CloseCutscene(cutsceneIndex));
+            cutsceneIndex++;
+            PlayerPrefs.SetInt("cutscene", cutsceneIndex);
+            endScore = cutsceneScores[cutsceneIndex];
+            bar.value = (float)yogurt / (float)endScore;
+        }
+    }
+
+    IEnumerator CloseCutscene(int x)
+    {
+        yield return new WaitForSeconds(10);
+        cutscenes[x].SetActive(false);
     }
 
 
