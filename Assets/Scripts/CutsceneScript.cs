@@ -7,6 +7,9 @@ public class CutsceneScript : MonoBehaviour
 {
     private void OnEnable()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        
+        
     }
 }
