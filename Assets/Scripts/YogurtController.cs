@@ -19,7 +19,8 @@ public class YogurtController : MonoBehaviour
     int endScore=1000;
     [SerializeField] GameObject[] cutscenes;
     int cutsceneIndex = 0;
-    int[] cutsceneScores = {100, 1000, 10000, 100000, 1000000 };
+    int[] cutsceneScores = {100, 10000, 100000, 10000000, 1000000000 , 1000000 };
+    bool isCutscene;
 
     //int[] cutsceneScores = { 10, 20, 30, 40, 50 };
 
@@ -42,7 +43,7 @@ public class YogurtController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isPassiveActivated && Time.time-lastPassive>1)
+        if(isPassiveActivated && Time.time-lastPassive>1 && !isCutscene)
         {
             yogurt += passivePerSecond;
             lastPassive = Time.time;
@@ -68,9 +69,11 @@ public class YogurtController : MonoBehaviour
 
         market.checkBuyable(yogurt);
         bar.value = (float) yogurt / (float) endScore;
-        if(yogurt>=cutsceneScores[cutsceneIndex])
+        if(yogurt>=cutsceneScores[cutsceneIndex] && cutsceneIndex<=4)
         {
+            Debug.Log(cutsceneIndex);
             cutscenes[cutsceneIndex].SetActive(true);
+            isCutscene = true;
             StartCoroutine(CloseCutscene(cutsceneIndex));
             cutsceneIndex++;
             PlayerPrefs.SetInt("cutscene", cutsceneIndex);
@@ -88,6 +91,7 @@ public class YogurtController : MonoBehaviour
     {
         yield return new WaitForSeconds(10);
         cutscenes[x].SetActive(false);
+        isCutscene = false;
     }
 
 

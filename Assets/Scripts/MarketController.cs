@@ -56,6 +56,9 @@ public class MarketController : MonoBehaviour
         {
             yogurtController.UpdatePassive();
         }
+
+        AudioManager.instance.Play("Coin");
+        
     }
     
 
