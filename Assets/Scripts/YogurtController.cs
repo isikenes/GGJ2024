@@ -19,7 +19,7 @@ public class YogurtController : MonoBehaviour
     int endScore=1000;
     [SerializeField] GameObject[] cutscenes;
     int cutsceneIndex = 0;
-    int[] cutsceneScores = {100, 10000, 100000, 10000000, 1000000000 , 1000000 };
+    int[] cutsceneScores = {100, 10000, 100000, 10000000, 100000000, 1000000 };
     bool isCutscene;
 
     //int[] cutsceneScores = { 10, 20, 30, 40, 50 };
@@ -81,7 +81,7 @@ public class YogurtController : MonoBehaviour
             bar.value = (float)yogurt / (float)endScore;
         }
 
-        if(yogurt>=10000000000)
+        if(yogurt>=1000000000)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
