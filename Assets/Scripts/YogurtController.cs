@@ -19,9 +19,9 @@ public class YogurtController : MonoBehaviour
     int endScore=1000;
     [SerializeField] GameObject[] cutscenes;
     int cutsceneIndex = 0;
-    //int[] cutsceneScores = {100, 1000, 10000, 100000, 1000000, 10000000 };
+    int[] cutsceneScores = {100, 1000, 10000, 100000, 1000000, 10000000 };
 
-    int[] cutsceneScores = { 10, 20, 30, 40, 50 };
+    //int[] cutsceneScores = { 10, 20, 30, 40, 50 };
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +47,8 @@ public class YogurtController : MonoBehaviour
             yogurt += passivePerSecond;
             lastPassive = Time.time;
             UpdateCounterText();
+            GameObject damla = Instantiate(floatingTextPrefab, new Vector2(-1.75f, -2f), Quaternion.identity);
+            damla.GetComponentInChildren<TextMesh>().text = "+" + passivePerSecond;
         }
     }
 
@@ -54,6 +56,8 @@ public class YogurtController : MonoBehaviour
     {
         yogurt += scorePerClick;
         UpdateCounterText();
+        GameObject damla = Instantiate(floatingTextPrefab, new Vector2(-1.75f, -2f), Quaternion.identity);
+        damla.GetComponentInChildren<TextMesh>().text = "+" + scorePerClick;
     }
 
     private void UpdateCounterText()
@@ -61,7 +65,6 @@ public class YogurtController : MonoBehaviour
         counter.SetText(yogurt.ToString());
         counter.GetComponentInParent<Animator>().Play("CounterAnimation");
         PlayerPrefs.SetInt("yogurt", yogurt);
-        Instantiate(floatingTextPrefab, new Vector2(-3f, -1f), Quaternion.identity);
 
         market.checkBuyable(yogurt);
         bar.value = (float) yogurt / (float) endScore;

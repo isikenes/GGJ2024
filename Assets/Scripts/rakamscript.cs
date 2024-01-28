@@ -8,7 +8,7 @@ public class rakamscript : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, 2f);
-        rb.AddForce(new Vector2(Random.Range(-250,250), 250));
+        rb.AddForce(new Vector2(Random.Range(-100,100), 250));
         //transform.Translate(0, 0.01f,0);
     }
 
