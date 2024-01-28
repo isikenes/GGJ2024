@@ -11,6 +11,11 @@ public class MarketController : MonoBehaviour
     void Start()
     {
         yogurtController = GetComponent<YogurtController>();
+        int temp = PlayerPrefs.GetInt("lastUnlocked", 0);
+        if(temp>0)
+        {
+            items[temp].GetComponent<Image>().color = Color.green;
+        }
     }
 
     public void checkBuyable(int sikke)
@@ -32,9 +37,15 @@ public class MarketController : MonoBehaviour
     {
         items[index].isBought = true;
         items[index].DisableUI();
+        items[index].GetComponent<Image>().color = Color.green;
+        if(index>0)
+        {
+            items[index - 1].GetComponent<Image>().color = Color.white;
+        }
 
         string key = "isUnlocked" + index;
         PlayerPrefs.SetInt(key, 1);
+        PlayerPrefs.SetInt("lastUnlocked", index);
         yogurtController.DecreaseSikke(items[index].cost);
 
         yogurtController.UpdateScorePerClick();
