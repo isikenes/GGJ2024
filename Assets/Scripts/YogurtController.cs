@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class YogurtController : MonoBehaviour
 {
@@ -66,6 +67,11 @@ public class YogurtController : MonoBehaviour
         bar.value = (float) yogurt / (float) endScore;
         if(yogurt>=cutsceneScores[cutsceneIndex])
         {
+            //todo index 5-10
+            if(cutsceneIndex==3)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
             cutscenes[cutsceneIndex].SetActive(true);
             StartCoroutine(CloseCutscene(cutsceneIndex));
             cutsceneIndex++;
